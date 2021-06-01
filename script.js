@@ -46,6 +46,7 @@ window.addEventListener("load", function(e) {
             // remoteVideo.play()
         // })
 
+        remoteVideo.load();
         remoteVideo.addEventListener('loadedmetadata', function () {
             if (remoteVideo.duration === Infinity) {
                 remoteVideo.currentTime = 1e101;
