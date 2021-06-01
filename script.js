@@ -32,7 +32,7 @@ window.addEventListener("load", function(e) {
             let combinedStream = new MediaStream([videoTrack, audioTrack]);  // Combine audio from usermedia and video from displayMedia(Screenshare)
             let call = peer.call(remotePeerID, combinedStream);  // Call the peer with his ID, passing caller's(local) mediastream
             call.on("stream", function(remoteStream) {  // When connection succesful with stream, adding peer's stream(callee) in remoteVideo of caller
-                addRemoteVideoStream(remoteStream);
+                addCallerStream(remoteStream);
             })
         })
         .catch(function(err) {
@@ -40,8 +40,18 @@ window.addEventListener("load", function(e) {
         })
     }
 
-    function addRemoteVideoStream(remoteStream) {  // Adding stream to remote video container
+    function addCallerStream(remoteStream) {  // Adding stream to remote video container
         remoteVideo.srcObject = remoteStream;
+        remoteVideo.addEventListener('loadedmetadata', () => {
+            remoteVideo.play()
+        })
+    }
+
+    function addCalleeStream(remoteStream) {  // Adding stream to remote video container
+        remoteVideo.srcObject = remoteStream;
+        remoteVideo.addEventListener('loadedmetadata', () => {
+            remoteVideo.play()
+        })
     }
 
     peer.on("call", function(call) {  // Peer receiving the call (callee)
@@ -52,7 +62,7 @@ window.addEventListener("load", function(e) {
         .then(function(localStream) {  // Get callee's stream
             call.answer(localStream);  // Answering call from caller and sending callee's(self) stream to the caller
             call.on("stream", function(remoteStream) {  // Adding the caller's stream in the remoteVideo of callee
-                addRemoteVideoStream(remoteStream);
+                addCalleeStream(remoteStream);
             })
         })
         .catch(function(err) {
