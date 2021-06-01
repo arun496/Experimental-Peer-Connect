@@ -69,20 +69,20 @@
 
             function callPeer(remotePeerID) {   // OPeration to call and connect with peer
                 navigator.mediaDevices.getDisplayMedia({
-                    video: { mediaSource: "screen" },
+                    video: true,
                     echoCancellation: true,
                     noiseSuppression: true
                 })
                 .then(async function(screenStream) {   // Get the caller's media stream
-                    let audioStream = await navigator.mediaDevices.getUserMedia({
-                        audio: true
-                    })
+                    // let audioStream = await navigator.mediaDevices.getUserMedia({
+                    //     audio: true
+                    // })
                     
-                    let [videoTrack] = screenStream.getVideoTracks();
-                    let [audioTrack] = audioStream.getAudioTracks();
+                    // let [videoTrack] = screenStream.getVideoTracks();
+                    // let [audioTrack] = audioStream.getAudioTracks();
 
-                    let combinedStream = new MediaStream([videoTrack, audioTrack]);  // Combine audio from usermedia and video from displayMedia(Screenshare)
-                    let call = peer.call(remotePeerID, combinedStream);  // Call the peer with his ID, passing caller's(local) mediastream
+                    // let combinedStream = new MediaStream([videoTrack, audioTrack]);  // Combine audio from usermedia and video from displayMedia(Screenshare)
+                    let call = peer.call(remotePeerID, screenStream);  // Call the peer with his ID, passing caller's(local) mediastream
                     call.on("stream", function(remoteStream) {  // When connection succesful with stream, adding peer's stream(callee) in remoteVideo of caller
                         addRemoteVideoStream(remoteStream);
                     })
