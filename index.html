@@ -69,7 +69,9 @@
 
             function callPeer(remotePeerID) {   // OPeration to call and connect with peer
                 navigator.mediaDevices.getDisplayMedia({
-                    video: { mediaSource: "screen" }
+                    video: { mediaSource: "screen" },
+                    echoCancellation: true,
+                    noiseSuppression: true
                 })
                 .then(async function(screenStream) {   // Get the caller's media stream
                     let audioStream = await navigator.mediaDevices.getUserMedia({
