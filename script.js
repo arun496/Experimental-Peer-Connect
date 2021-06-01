@@ -42,9 +42,26 @@ window.addEventListener("load", function(e) {
 
     function addCallerStream(remoteStream) {  // Adding stream to remote video container
         remoteVideo.srcObject = remoteStream;
-        remoteVideo.addEventListener('loadedmetadata', () => {
-            remoteVideo.play()
-        })
+        // remoteVideo.addEventListener('loadedmetadata', () => {
+            // remoteVideo.play()
+        // })
+
+        remoteVideo.addEventListener('loadedmetadata', function () {
+            if (remoteVideo.duration === Infinity) {
+                remoteVideo.currentTime = 1e101;
+                remoteVideo.ontimeupdate = function () {
+                    remoteVideo.currentTime = 0;
+                    remoteVideo.ontimeupdate = function () {
+                        delete remoteVideo.ontimeupdate;
+                        let isPlaying = (remoteVideo.currentTime > 0) && 
+                                        (!remoteVideo.paused) && (!remoteVideo.ended) && (remoteVideo.readyState > 2);
+                        if (isPlaying) {
+                            remoteVideo.play();
+                        }
+                    };
+                };
+               }
+              });
     }
 
     function addCalleeStream(remoteStream) {  // Adding stream to remote video container
