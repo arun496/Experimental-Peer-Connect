@@ -97,7 +97,7 @@
 
             peer.on("call", function(call) {  // Peer receiving the call (callee)
                 navigator.mediaDevices.getUserMedia({
-                    // video: true,
+                    video: true,
                     audio: true
                 })
                 .then(function(localStream) {  // Get callee's stream
