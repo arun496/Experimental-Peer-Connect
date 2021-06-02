@@ -21,19 +21,16 @@ window.addEventListener("load", function(e) {
     //     }
     // });
     let peer = new Peer({
-        host: 'localhost',
-        port: 9000,
-        path: '/peerjs'
-        // config: {
-        //     'iceServers': [
-        //         { url: 'stun:stun1.l.google.com:19302' },
-        //         {
-        //             url: 'turn:numb.viagenie.ca',
-        //             credential: 'muazkh',
-        //             username: 'webrtc@live.com'
-        //         }
-        //     ]
-        // }
+        config: {
+            'iceServers': [
+                { url: 'stun:stun1.l.google.com:19302' },
+                {
+                    url: 'turn:numb.viagenie.ca',
+                    credential: 'muazkh',
+                    username: 'webrtc@live.com'
+                }
+            ]
+        }
     });
 
 
