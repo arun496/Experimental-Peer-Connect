@@ -26,6 +26,9 @@
             width: 7rem;
             height: 2rem;
         }
+        #call-peer {
+            background-color: rgb(35, 185, 35);
+        }
         .controls-container {
             width: 70vw;
             margin: auto;
@@ -43,10 +46,11 @@
     <div class="controls-container">
         <h3 id="show-peer-id"></h3>
         <input type="text" id="peer-id" placeholder="Enter Peer ID...">
+        <button id="connect-btn">Connect</button>
         <button id="call-peer">Call Peer</button>
     </div>
 
-    <video controls id="remote-video"></video>
+    <video controls autoplay id="remote-video"></video>
     
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" defer></script>
     <script src="script.js" defer></script>
